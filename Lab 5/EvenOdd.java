@@ -2,11 +2,11 @@ package hit.week5;
 
 public class EvenOdd {
 	public static void main(String[] args) {
-		
+
 		Numbers num=new Numbers();
 		
-		Thread e=new Thread(new Even(num));
-		Thread o=new Thread(new Odd(num));
+		Thread e=new Thread(new Evod(num),"Even");
+		Thread o=new Thread(new Evod(num),"Odd");
 		
 		e.start();
 		o.start();
@@ -14,31 +14,26 @@ public class EvenOdd {
 
 }
 
-class Even implements Runnable{
+class Evod implements Runnable{
 	Numbers num;
-	public Even(Numbers num) {
+	public Evod(Numbers num) {
 		this.num=num;
 	}
 	
 	public void run() {
+		Thread t=Thread.currentThread();
+		if(t.getName().equals("Even"))
 			num.even();	
-	}
-}
-
-class Odd implements Runnable{
-	Numbers num;
-	public Odd(Numbers num) {
-		this.num=num;
-	}
-	
-	public void run() {
-		num.odd();
+		else if(t.getName().equals("Odd"))
+			num.odd();
 	}
 }
 
 class Numbers{
 	public void even() {
-		System.out.println("Even numbers.....");
+		Thread t= Thread.currentThread();
+		String name=t.getName();
+		System.out.println("Even numbers....."+name);
 		for(int i=0;i<=100;i++) {
 			if(i%2==0)
 			System.out.println(i);
@@ -47,7 +42,9 @@ class Numbers{
 		}
 	}
 	public void odd() {
-		System.out.println("Odd numbers.....");
+		Thread t= Thread.currentThread();
+		String name=t.getName();
+		System.out.println("Odd numbers....."+name);
 		for(int i=0;i<=100;i++) {
 			if(i%2!=0)
 			System.out.println(i);
