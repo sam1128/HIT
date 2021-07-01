@@ -21,22 +21,23 @@ class Guard implements Runnable{
 	}
 	
 	public void run() {
+		synchronized(Room.class){
 		try {
 			room.enter();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+		}
 	}
 }
 
 class Room{
 	 public void enter() throws InterruptedException {
-		 synchronized(Room.class) {
+		// synchronized(Room.class) {
 		Thread t=Thread.currentThread();
 		System.out.println(t.getName()+" Entering the room....");
 		Thread.sleep(2000);
 		System.out.println(t.getName()+" Exiting the room....");
-	}
+	//}
 	}
 }
