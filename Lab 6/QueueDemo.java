@@ -18,6 +18,9 @@ public class QueueDemo {
 		System.out.println(queue.peek());//retrieves head of queue
 		System.out.println(queue.poll());//retrieve and removes head of queue
 		System.out.println(queue);
+		
+		System.out.println(queue.element());  //it throws exception if queue is empty so its diff from peek
+		System.out.println(queue);
 	}
 
 }
