@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Properties;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -65,38 +66,26 @@ public class ECertificate {
 		c.addImage(img1);
 
 		BaseFont bold = BaseFont.createFont(BaseFont.HELVETICA_OBLIQUE, BaseFont.WINANSI, BaseFont.EMBEDDED);
-
-		TextField txt = new TextField(stamp.getWriter(), new Rectangle(750, 350, 100, 390), "newtxt");
-		txt.setOptions(TextField.READ_ONLY);
-		txt.setAlignment(Element.ALIGN_CENTER);
-		txt.setTextColor(BaseColor.BLACK);
-		txt.setFont(bold);
-		txt.setFontSize(30);
-		txt.setText(name);
-		stamp.addAnnotation(txt.getTextField(), 1);
-
-		TextField sig = new TextField(stamp.getWriter(), new Rectangle(910, 210, 240, 290), "signature");
-		sig.setOptions(TextField.READ_ONLY);
-		sig.setAlignment(Element.ALIGN_CENTER);
-		sig.setTextColor(BaseColor.BLACK);
-		sig.setFont(bold);
-		sig.setFontSize(15);
-		sig.setText("Ms.Samiksha");
-		stamp.addAnnotation(sig.getTextField(), 1);
-
-		TextField datetxt = new TextField(stamp.getWriter(), new Rectangle(350, 210, 180, 290), "date");
-		datetxt.setOptions(TextField.READ_ONLY);
-		datetxt.setAlignment(Element.ALIGN_CENTER);
-		datetxt.setTextColor(BaseColor.BLACK);
-		datetxt.setFont(bold);
-		datetxt.setFontSize(15);
+		
+		text(750, 350, 100, 390,30,name,stamp,bold);
+		text(910, 210, 240, 290,15,"Ms.Samiksha",stamp,bold);
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		datetxt.setText(LocalDate.now().format(format).toString());
-		stamp.addAnnotation(datetxt.getTextField(), 1);
+		String d=LocalDate.now().format(format);
+		text(350, 210, 180, 290,15,d,stamp,bold);
 
 		stamp.close();
 		reader.close();
-		// f.close();
+	}
+	
+	public static void text(int a,int b,int c,int d, int fSize,String n, PdfStamper p, BaseFont bf) throws Exception{
+		TextField field= new TextField(p.getWriter(), new Rectangle(a,b,c,d),n);
+		field.setOptions(TextField.READ_ONLY);
+		field.setAlignment(Element.ALIGN_CENTER);
+		field.setTextColor(BaseColor.BLACK);
+		field.setFont(bf);
+		field.setFontSize(fSize);
+		field.setText(n);
+		p.addAnnotation(field.getTextField(), 1);
 	}
 
 	public void sendEmail(String adress, String name) {
